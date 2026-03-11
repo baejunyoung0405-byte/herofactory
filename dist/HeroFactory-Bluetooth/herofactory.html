@@ -1,0 +1,333 @@
+﻿<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HeroFactory MVP</title>
+    <link rel="stylesheet" href="./styles.css?v=20260308f10" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <h1>HeroFactory</h1>
+        <div class="resources">
+          <span id="creditText">크레딧: 0</span>
+          <span id="resourceText">자원: 0</span>
+          <span id="powerText">전력: 0</span>
+        </div>
+      </header>
+
+      <main>
+        <section id="screen-main" class="screen active">
+          <div class="menu">
+            <button
+              data-go="sortie"
+              data-help-title="출격"
+              data-help-desc="행성과 지역을 선택해 작전에 출격합니다. 전투에서 승리하면 지역 수복이 진행됩니다."
+            >
+              출격
+            </button>
+            <button
+              data-go="base"
+              data-help-title="기지"
+              data-help-desc="본부, 공장, 발전소, 마켓, 블랙 마켓 등에서 관리, 생산, 거래, 정비를 진행합니다."
+            >
+              기지
+            </button>
+            <button
+              data-go="settings"
+              data-help-title="설정"
+              data-help-desc="사운드, 언어, 난이도, 무적 모드, 무한 재화 모드를 조정합니다."
+            >
+              설정
+            </button>
+            <button
+              id="exitBtn"
+              data-help-title="종료"
+              data-help-desc="게임을 종료합니다. 웹 버전에서는 창 종료 대신 안내 메시지가 표시됩니다."
+            >
+              종료
+            </button>
+          </div>
+          <div id="mainMenuHelp" class="menu-help">
+            <h3>출격</h3>
+            <p>행성과 지역을 선택해 작전에 출격합니다. 전투에서 승리하면 지역 수복이 진행됩니다.</p>
+          </div>
+        </section>
+
+        <section id="screen-sortie" class="screen">
+          <div class="panel">
+            <h2>출격</h2>
+            <div class="row">
+              <button id="planetOpenBtn">행성 선택</button>
+              <span id="selectedPlanetText">선택 행성: 없음</span>
+            </div>
+            <div class="row">
+              <h3>지역 목록</h3>
+            </div>
+            <div id="regionList" class="list"></div>
+            <div class="row">
+              <button id="startMissionBtn">선택 지역 출격</button>
+              <button data-go="main">메인으로</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-base" class="screen">
+          <div class="panel base-panel">
+            <h2>기지</h2>
+            <div class="base-layout">
+              <div id="baseMap" class="base-map">
+                <div class="terrain mountain mountain-a" aria-hidden="true"></div>
+                <div class="terrain mountain mountain-b" aria-hidden="true"></div>
+                <div class="terrain mountain mountain-c" aria-hidden="true"></div>
+                <div class="terrain shoreline" aria-hidden="true"></div>
+                <div class="terrain grass-patch g1" aria-hidden="true"></div>
+                <div class="terrain grass-patch g2" aria-hidden="true"></div>
+                <div class="terrain grass-patch g3" aria-hidden="true"></div>
+                <div class="terrain grass-patch g4" aria-hidden="true"></div>
+                <div class="terrain grass-patch g5" aria-hidden="true"></div>
+                <div class="terrain grass-patch g6" aria-hidden="true"></div>
+                <div class="terrain dune d1" aria-hidden="true"></div>
+                <div class="terrain dune d2" aria-hidden="true"></div>
+                <div class="terrain dune d3" aria-hidden="true"></div>
+                <div class="terrain dune d4" aria-hidden="true"></div>
+                <div class="terrain rock r1" aria-hidden="true"></div>
+                <div class="terrain rock r2" aria-hidden="true"></div>
+                <div class="terrain rock r3" aria-hidden="true"></div>
+                <div class="terrain rock r4" aria-hidden="true"></div>
+                <i class="tree t1" aria-hidden="true"></i>
+                <i class="tree t2" aria-hidden="true"></i>
+                <i class="tree t3" aria-hidden="true"></i>
+                <i class="tree t4" aria-hidden="true"></i>
+                <i class="tree t5" aria-hidden="true"></i>
+                <i class="tree t6" aria-hidden="true"></i>
+                <i class="tree t7" aria-hidden="true"></i>
+                <i class="tree t8" aria-hidden="true"></i>
+                <i class="tree t9" aria-hidden="true"></i>
+                <i class="tree t10" aria-hidden="true"></i>
+                <i class="wave w1" aria-hidden="true"></i>
+                <i class="wave w2" aria-hidden="true"></i>
+                <i class="wave w3" aria-hidden="true"></i>
+                <i class="wave w4" aria-hidden="true"></i>
+                <i class="wave w5" aria-hidden="true"></i>
+                <div class="road road-hq-hangar" aria-hidden="true"></div>
+                <div class="road road-hq-factory" aria-hidden="true"></div>
+                <div class="road road-factory-plant" aria-hidden="true"></div>
+                <div class="road road-plant-market" aria-hidden="true"></div>
+                <div class="road road-market-black" aria-hidden="true"></div>
+                <div class="road road-hangar-prison" aria-hidden="true"></div>
+                <button class="facility facility-hangar" data-facility="hangar">격납고</button>
+                <button class="facility facility-hq" data-facility="hq">본부</button>
+                <button class="facility facility-factory" data-facility="factory">공장</button>
+                <button class="facility facility-plant" data-facility="plant">
+                  <span>발전소</span>
+                  <div class="plant-grid" aria-hidden="true">
+                    <i></i><i></i><i></i>
+                    <i></i><i></i><i></i>
+                    <i></i><i></i><i></i>
+                  </div>
+                </button>
+                <button class="facility facility-market" data-facility="market">마켓</button>
+                <button class="facility facility-black" data-facility="black">블랙 마켓</button>
+                <button class="facility facility-prison" data-facility="prison">수감소</button>
+              </div>
+              <aside class="base-info">
+                <h3 id="baseInfoName">시설 정보</h3>
+                <p id="baseInfoDesc">건물에 마우스를 올리면 설명이 표시됩니다.</p>
+                <p id="baseInfoUse">클릭하면 해당 시설의 상세 창이 열립니다.</p>
+              </aside>
+            </div>
+            <div class="row">
+              <button data-go="main">메인으로</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-settings" class="screen">
+          <div class="panel">
+            <h2>설정</h2>
+            <div class="setting">
+              <label>사운드</label>
+              <input id="soundToggle" type="checkbox" />
+            </div>
+            <div class="setting">
+              <label>언어</label>
+              <select id="languageSelect">
+                <option value="ko">한국어</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div class="setting">
+              <label>난이도</label>
+              <select id="difficultySelect">
+                <option value="invincible">무적</option>
+                <option value="very_easy">매우 쉬움</option>
+                <option value="easy">쉬움</option>
+                <option value="normal">보통</option>
+                <option value="hard">어려움</option>
+                <option value="very_hard">매우 어려움</option>
+                <option value="nightmare">악몽</option>
+              </select>
+            </div>
+            <div class="setting">
+              <label>무적 모드</label>
+              <input id="godModeToggle" type="checkbox" />
+            </div>
+            <div class="setting">
+              <label>무한 재화</label>
+              <input id="infiniteToggle" type="checkbox" />
+            </div>
+            <div class="row">
+              <button id="saveBtn">저장</button>
+              <button id="resetBtn">초기화</button>
+              <button data-go="main">메인으로</button>
+            </div>
+            <div class="base-card">
+              <strong>시점 저장</strong>
+              <div class="row">
+                <button id="manualSaveNowBtn">현 시점 저장하기</button>
+              </div>
+              <div id="manualSaveList" class="list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-mission" class="screen">
+          <div class="mission-shell">
+            <canvas id="gameCanvas" width="900" height="500"></canvas>
+            <div class="mission-overlay mission-overlay-top">
+              <h2 id="missionTitle">임무</h2>
+              <p id="missionInfo"></p>
+            </div>
+            <div id="bossWarningOverlay" class="boss-warning hidden">
+              <div id="bossWarningTitle">BOSS ALERT</div>
+              <div id="bossWarningText">보스 개체 감지</div>
+            </div>
+            <div id="bossPhaseOverlay" class="boss-phase hidden">
+              <div id="bossPhaseText">PHASE SHIFT</div>
+            </div>
+            <div class="mission-overlay mission-overlay-bottom">
+              <div id="missionSkillBar" class="mission-skill-bar">
+                <div id="missionSkillCards" class="mission-skill-cards"></div>
+                <div id="missionSkillPeek" class="mission-skill-peek"></div>
+              </div>
+              <div id="missionControlBar" class="row mission-control-bar">
+                <span id="missionHud"></span>
+                <button id="missionAutoBtn">자동: OFF</button>
+                <button id="missionFollowSwitchBtn">추적 대상 변경</button>
+                <span id="missionFollowLabel">추적: 없음</span>
+                <div id="missionSpeedGroup" class="mission-speed-group">
+                  <button data-speed="1" class="active">x1</button>
+                  <button data-speed="2">x2</button>
+                  <button data-speed="3">x3</button>
+                  <button data-speed="4">x4</button>
+                  <button data-speed="5">x5</button>
+                </div>
+                <button id="emergencyRepairBtn">긴급 수리</button>
+                <button id="retreatBtn">철수</button>
+                <span id="missionHint" class="hint mission-hint-inline">이동: 우클릭 / 맵 이동: 좌클릭 드래그 / 상호작용: F</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="planetModal" class="modal hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>행성 선택</h3>
+          <button id="planetCloseBtn">닫기</button>
+        </div>
+        <div class="planet-body">
+          <div id="planetViewport">
+            <div id="planetTrack"></div>
+          </div>
+          <aside class="planet-info">
+            <h4 id="planetInfoName">행성 정보</h4>
+            <p id="planetInfoTraits">특징: -</p>
+            <p id="planetInfoEnemies">적: -</p>
+            <p id="planetInfoRewards">보상: -</p>
+            <p id="planetInfoRestore">수복률: -</p>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <div id="facilityModal" class="modal hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="facilityTitle">시설</h3>
+          <button id="facilityCloseBtn">닫기</button>
+        </div>
+        <div id="baseContent"></div>
+        <div class="row">
+          <button id="facilityExitBtn">나가기</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="emergencyToast" class="emergency-toast hidden">
+      <strong>긴급 퀘스트 등장!</strong>
+      <span id="emergencyToastTimer">남은 시간: --:--:--</span>
+    </div>
+    <div id="actionToast" class="action-toast hidden"></div>
+    <div id="uiLoadGauge" class="ui-load-gauge hidden">
+      <div class="ui-load-label" id="uiLoadGaugeText">로딩 중...</div>
+      <div class="ui-load-track">
+        <div class="ui-load-fill" id="uiLoadGaugeFill"></div>
+      </div>
+    </div>
+
+    <div id="unitDetailModal" class="unit-detail-modal hidden">
+      <div class="unit-detail-card">
+        <div class="modal-header">
+          <h3 id="unitDetailTitle">유닛 정보</h3>
+          <button id="unitDetailCloseBtn">닫기</button>
+        </div>
+        <div id="unitDetailBody"></div>
+        <div class="row">
+          <button id="unitUpgradeBtn">강화</button>
+          <button id="unitPromoteBtn">성 강화</button>
+          <button id="unitDetailCloseBtn2">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="itemDetailModal" class="unit-detail-modal hidden">
+      <div class="unit-detail-card">
+        <div class="modal-header">
+          <h3 id="itemDetailTitle">장비/무장 정보</h3>
+          <button id="itemDetailCloseBtn">닫기</button>
+        </div>
+        <div id="itemDetailBody"></div>
+        <div class="row">
+          <button id="itemUpgradeBtn">강화</button>
+          <button id="itemDetailCloseBtn2">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="missionLoadingOverlay" class="mission-loading hidden">
+      <div class="mission-loading-card">
+        <h3 id="missionLoadingTitle">출격 준비 중...</h3>
+        <p id="missionLoadingText">지형 스캔 및 강하 좌표 계산</p>
+      </div>
+    </div>
+
+    <div id="missionResultModal" class="modal hidden">
+      <div class="modal-card mission-result-card">
+        <h3 id="missionResultTitle">작전 결과</h3>
+        <p id="missionResultReason"></p>
+        <div id="missionResultBody"></div>
+        <div class="row">
+          <button id="missionResultRestartBtn" class="hidden">다시 시작</button>
+          <button id="missionResultMainBtn">메인으로</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./game.js?v=20260308f18"></script>
+  </body>
+</html>
